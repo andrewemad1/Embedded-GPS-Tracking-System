@@ -1,3 +1,11 @@
+const int R = 6371; //Radius of the earth in (kilometers)
+const double PI=3.14159265358979323846; //Cont PI
+double totalDis = 0; //The total distance taken by the global variable
+
+double deg2rad(double deg){
+  return (deg * PI / 180);
+}
+
 double distance(double lat1, double lon1, double lat2, double lon2){
 
   double theta1 = deg2rad(lat1);
