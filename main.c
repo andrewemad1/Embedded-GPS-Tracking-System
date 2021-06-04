@@ -1,3 +1,10 @@
+#include "stdio.h"
+#include <stdlib.h>
+#include<string.h>
+#include<string.h>
+#include <Math.h>
+void SystemInit(){}
+
 const int R = 6371; //Radius of the earth in (kilometers)
 const double PI=3.14159265358979323846; //Cont PI
 double totalDis = 0; //The total distance taken by the global variable
