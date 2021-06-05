@@ -68,6 +68,25 @@ else
 
 GPIO_PORTF_DATA_R &=~(0x02); //turns on red LED if distance >100
 }
+void PortDB_Init(){
+	// Initializing Clock and wait until get stablized
+	SYSCTL_RCGCGPIO_R |= 0x02;
+	SYSCTL_RCGCGPIO_R |= 0x10;
+		// Initializing Port B D pins
+	GPIO_PORTE_LOCK_R = GPIO_LOCK_KEY;
+	GPIO_PORTE_AMSEL_R = 0;
+	GPIO_PORTB_AMSEL_R = 0;
+	GPIO_PORTE_DIR_R =0x07;
+	GPIO_PORTB_DIR_R |= 0xFF;
+	GPIO_PORTE_DEN_R |= 0x07;
+	GPIO_PORTB_DEN_R |= 0xFF;
+	GPIO_PORTB_AFSEL_R |= 0x00;
+	GPIO_PORTE_AFSEL_R |= 0x00;
+	GPIO_PORTB_PCTL_R =0;
+	GPIO_PORTE_PCTL_R =0;
+
+}
+
 int main (){
 PORTFinit();
 while(1)
