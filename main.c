@@ -1,8 +1,11 @@
-#include "stdio.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
-#include<string.h>
-#include <Math.h>
+#include <inttypes.h>
+#include <math.h>
+#include <stdbool.h>
+#include "tm4c123gh6pm.h"
+
 
 void SystemInit(){}
 void PORTFinit(){
@@ -20,13 +23,15 @@ void PORTFinit(){
 }
 
 const int R = 6371; //Radius of the earth in (kilometers)
-const double PI=3.14159265358979323846; //Cont PI
+const double PI=3.14159265358979323846; //Constant PI
 double totalDis = 0; //The total distance taken by the global variable
 
+//Function to convert from degree to radian
 double deg2rad(double deg){
   return (deg * PI / 180);
 }
 
+//Harvesine Formula to calculate the distance between two points
 double distance(double lat1, double lon1, double lat2, double lon2){
 
   double theta1 = deg2rad(lat1);
