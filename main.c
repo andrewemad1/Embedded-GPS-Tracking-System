@@ -86,14 +86,15 @@ void PortDB_Init(){
 	GPIO_PORTE_PCTL_R =0;
 
 }
-
+//LCD TESTING 
 int main (){
-PORTFinit();
-while(1)
-{
+  PortEB_Init();
+   LCD_init();
+  	LCD_displayString("Andrew");
+  	while(1){
 
 
-}
+  	}
 
 
 
