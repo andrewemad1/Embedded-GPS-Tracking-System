@@ -72,7 +72,7 @@ void PortDB_Init(){
 	// Initializing Clock and wait until get stablized
 	SYSCTL_RCGCGPIO_R |= 0x02;
 	SYSCTL_RCGCGPIO_R |= 0x10;
-		// Initializing Port B D pins
+		// Initializing Port B  E pins
 	GPIO_PORTE_LOCK_R = GPIO_LOCK_KEY;
 	GPIO_PORTE_AMSEL_R = 0;
 	GPIO_PORTB_AMSEL_R = 0;
