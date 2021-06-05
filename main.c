@@ -68,3 +68,15 @@ else
 
 GPIO_PORTF_DATA_R &=~(0x02); //turns on red LED if distance >100
 }
+int main (){
+PORTFinit();
+while(1)
+{
+
+
+}
+
+
+
+
+}
