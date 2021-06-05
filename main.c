@@ -45,3 +45,20 @@ double distance(double lat1, double lon1, double lat2, double lon2){
 
   return totalDis += d;
 }
+bool FinalDestination(int distance)
+{ if (distance>100)
+    return true;
+    else
+    return false;
+}
+
+void LED_ON(int distance)
+{
+
+if(FinalDestination(distance))
+
+    GPIO_PORTF_DATA_R |= 0x02; //red
+else
+
+GPIO_PORTF_DATA_R &=~(0x02); //turns on red LED if distance >100
+}
