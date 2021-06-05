@@ -36,6 +36,54 @@ void LCD_init(void)
 	LCD_sendCommand(CLEAR_COMMAND); /* clear LCD at the beginning */
 	_delay_ms(2);
 }
+
+void LCD_sendCommand(uint8 command)
+{
+	GPIO_PORTB_DATA_R=command;
+	//CLEAR_BIT(LCD_CTRL_PORT,RS); /* Instruction Mode RS=0 */
+	GPIO_PORTE_DATA_R&= ~(1<<0);
+	//CLEAR_BIT(LCD_CTRL_PORT,RW); /* write data to LCD so RW=0 */
+	GPIO_PORTE_DATA_R&= ~(1<<1);
+
+	
+	//SET_BIT(LCD_CTRL_PORT,E); /* Enable LCD E=1 */
+	GPIO_PORTE_DATA_R|= (1<<2);
+	_delay_us(1); /* delay for processing Tpw - Tdws = 190ns */
+	
+	
+	//CLEAR_BIT(LCD_CTRL_PORT,E); /* disable LCD E=0 */
+	GPIO_PORTE_DATA_R&= ~(1<<2);
+	_delay_us(1); /* delay for processing Th = 13ns */
+}
+
+void LCD_displayCharacter(uint8 data)
+{
+	
+	GPIO_PORTB_DATA_R=data;
+	//SET_BIT(LCD_CTRL_PORT,RS); /* Data Mode RS=1 */
+	GPIO_PORTE_DATA_R|= (1<<0);
+
+
+	//CLEAR_BIT(LCD_CTRL_PORT,RW); /* write data to LCD so RW=0 */
+	GPIO_PORTE_DATA_R&= ~(1<<1);
+
+	//SET_BIT(LCD_CTRL_PORT,E); /* Enable LCD E=1 */
+	GPIO_PORTE_DATA_R|= (1<<2);
+	_delay_us(1); /* delay for processing Tpw - Tdws = 190ns */
+
+	//LCD_DATA_PORT = data; /* out the required data char to the data bus D0 --> D7 */
+	
+	
+	//CLEAR_BIT(LCD_CTRL_PORT,E); /* disable LCD E=0 */
+	GPIO_PORTE_DATA_R&= ~(1<<2);
+	_delay_us(1); /* delay for processing Th = 13ns */	
+}
+
+
+
+
+
+
 void LCD_displayString(const char* Str)
 {
 	uint8 i = 0;
