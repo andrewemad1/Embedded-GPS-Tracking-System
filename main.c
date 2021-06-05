@@ -1,13 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<string.h>
+#include <string.h>
 #include <inttypes.h>
 #include <math.h>
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 
 
-void SystemInit(){}
 void PORTFinit(){
   volatile uint32_t delay;
 	SYSCTL_RCGCGPIO_R|=0x20;
@@ -68,7 +67,7 @@ else
 
 GPIO_PORTF_DATA_R &=~(0x02); //turns on red LED if distance >100
 }
-void PortDB_Init(){
+void PortEB_Init(){
 	// Initializing Clock and wait until get stablized
 	SYSCTL_RCGCGPIO_R |= 0x02;
 	SYSCTL_RCGCGPIO_R |= 0x10;
@@ -86,12 +85,23 @@ void PortDB_Init(){
 	GPIO_PORTE_PCTL_R =0;
 
 }
-//LCD TESTING 
+//LCD TESTING
 int main (){
+	PORTFinit();
   PortEB_Init();
    LCD_init();
   	LCD_displayString("Andrew");
   	while(1){
+if((GPIO_PORTF_DATA_R&0x11)==0x10){    // blue light
+	GPIO_PORTF_DATA_R=0x04;
+	}
+	else if((GPIO_PORTF_DATA_R&0x11)==0x01){ // green light
+	GPIO_PORTF_DATA_R=0x08;
+	}
+	else if((GPIO_PORTF_DATA_R&0x11)==0x00){ // Red light
+	GPIO_PORTF_DATA_R=0x02;
+	}
+	else GPIO_PORTF_DATA_R=0;      // No light
 
 
   	}
