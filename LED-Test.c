@@ -1,10 +1,9 @@
-#include "stdio.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
 #include <Math.h>
 #include "tm4c123gh6pm.h"
 
-void SystemInit(){}
 void PORTFinit(){
   volatile uint32_t delay;
 	SYSCTL_RCGCGPIO_R|=0x20;
