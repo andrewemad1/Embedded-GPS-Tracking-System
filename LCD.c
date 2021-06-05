@@ -21,3 +21,11 @@ void _delay_us(int n)
 
 	}
 }
+
+//LCD commands
+//clear display
+
+void LCD_clearScreen(void)
+{
+	LCD_sendCommand(CLEAR_COMMAND);
+}
