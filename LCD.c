@@ -22,8 +22,34 @@ void _delay_us(int n)
 	}
 }
 
+
+
+
+void LCD_init(void)
+{
+	/* Configure the control pins(E,RS,RW) as output pins */
+	_delay_ms(20);
+	LCD_sendCommand(TWO_LINE_LCD_Eight_BIT_MODE); /* use 2-line lcd + 8-bit Data Mode + 5*7 dot display Mode */
+	_delay_us(50);
+	LCD_sendCommand(CURSOR_OFF); /* cursor off */
+	_delay_us(50);
+	LCD_sendCommand(CLEAR_COMMAND); /* clear LCD at the beginning */
+	_delay_ms(2);
+}
+void LCD_displayString(const char* Str)
+{
+	uint8 i = 0;
+	while (Str[i] != '\0')
+	{
+		LCD_displayCharacter(Str[i]);
+		i++;
+		_delay_ms(1);
+	}
+}
 //LCD commands
 //clear display
+
+
 
 void LCD_clearScreen(void)
 {
