@@ -235,7 +235,7 @@ Reset_Handler   PROC
                 
          
                 LDR     R0, =__main
-                
+                BX      R0
                 ENDP
 
 
