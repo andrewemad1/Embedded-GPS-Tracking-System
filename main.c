@@ -51,7 +51,7 @@ double distance(double lat1, double lon1, double lat2, double lon2){
 void func1(float x){
 
 if(x>=100)  GPIO_PORTF_DATA_R|=0x02 ;
-else   GPIO_PORTF_DATA_R &=~0x02;	
+else   GPIO_PORTF_DATA_R &=~0x02;
 }
 
 void PortEB_Init(){
@@ -79,6 +79,7 @@ int main (){
    LCD_init();
   	LCD_displayString("Andrew");
   	while(1){
+   /*
 if((GPIO_PORTF_DATA_R&0x11)==0x10){    // blue light
 	GPIO_PORTF_DATA_R=0x04;
 	}
@@ -89,7 +90,8 @@ if((GPIO_PORTF_DATA_R&0x11)==0x10){    // blue light
 	GPIO_PORTF_DATA_R=0x02;
 	}
 	else GPIO_PORTF_DATA_R=0;      // No light
-
+*/
+func1(200);
 
   	}
 
