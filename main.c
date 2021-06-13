@@ -253,7 +253,7 @@ int main (){
 		lon2=	strtod(lg,NULL);
 		dist = distance( lat1,  lon1,  lat2,  lon2);
 
-		if(dist>0.25){ continue ;}
+		if(dist<0.25){ continue ;}
 		else{
 
 		findis+= dist ;
@@ -264,6 +264,7 @@ int main (){
 		LCD_displayString("  Distance ");
 		LCD_displayString(distancat);
 		func1(findis);
+		func2(findis); //Blinking blue+red=pink
 		lat1=lat2;
 		lon1=lon2;
 		}
