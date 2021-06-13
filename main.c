@@ -191,30 +191,56 @@ void PortEB_Init(){
 	GPIO_PORTE_PCTL_R =0;
 
 }
-//LCD TESTING
+double dist;
+
 int main (){
-	PORTFinit();
-  PortEB_Init();
-   LCD_init();
-  	LCD_displayString("Andrew");
+	    PORTFinit();
+		UART_Init();
+		PortEB_Init();
+		LCD_init();
+  	
+		UART0_Init();
+		Receive_GPS_Data();
+
+		LCD_clearScreen();
+		LCD_displayString("  Welcome");
+		_delay_ms(1000);
+		lati1	= strtod(lat,NULL); //awel makan;
+		long1=	strtod(lg,NULL) ;
+		lat1= lati1;
+		lon1= long1;
+
   	while(1){
-   /*
-if((GPIO_PORTF_DATA_R&0x11)==0x10){    // blue light
-	GPIO_PORTF_DATA_R=0x04;
-	}
-	else if((GPIO_PORTF_DATA_R&0x11)==0x01){ // green light
-	GPIO_PORTF_DATA_R=0x08;
-	}
-	else if((GPIO_PORTF_DATA_R&0x11)==0x00){ // Red light
-	GPIO_PORTF_DATA_R=0x02;
-	}
-	else GPIO_PORTF_DATA_R=0;      // No light
-*/
-func1(200);
+		 Receive_GPS_Data();
+				_delay_ms(250);
+		UART_outstring("Latitiude ");
+		UART_outstring(lat);
+		UART_outstring("\n");
+		UART_outstring("Longitude ");
+		UART_outstring(lg);
+		UART_outstring("\n");
+		UART_outstring("\n");
+	
+	  lat2 = strtod(lat,NULL);
+		lon2=	strtod(lg,NULL);
+		dist = distance( lat1,  lon1,  lat2,  lon2);
+		
+		if(dist<0.1){ continue ;}
+		else{
+
+		findis+= 10*dist ;
+		sprintf(distancat, "%3f", (float)findis);
+	//a=	(int)findis;
+	//distancat=(""+a).toCharArray();
+		LCD_clearScreen();
+		LCD_displayString("  Distance ");
+		LCD_displayString(distancat);
+		func1(findis);
+		lat1=lat2;
+		lon1=lon2;
+		}
+
 
   	}
-
-
-
 
 }
