@@ -48,6 +48,52 @@ char UART_receivechar ()
 while ((UART2_FR_R&	0x10) !=0);
 return (char) UART2_DR_R;
 }
+//parsing UART data (GPS)
+void Receive_GPS_Data(){
+    while(finished==0){
+        Gpsdata = UART_receivechar();
+        f = 1;
+       if( Gpsdata=='$' && pos_cnt == 0)   // finding GPRMC header
+         pos_cnt=1;
+       if( Gpsdata=='G' && pos_cnt == 1)
+         pos_cnt=2;
+       if( Gpsdata=='P' && pos_cnt == 2)
+         pos_cnt=3;
+       if( Gpsdata=='R' && pos_cnt == 3)
+         pos_cnt=4;
+       if( Gpsdata=='M' && pos_cnt == 4)
+         pos_cnt=5;
+       if( Gpsdata=='C' && pos_cnt==5 )
+         pos_cnt=6;
+       if(pos_cnt==6 &&  Gpsdata ==','){   // count commas in message
+         commaa++;
+         f=0;
+       }
+
+       if(commaa==3 && f==1){
+        lat[lat_cnt++] =  Gpsdata;         // latitude
+        f=0;
+       }
+
+       if(commaa==5 && f==1){
+         lg[log_cnt++] =  Gpsdata;         // Longitude
+         f=0;
+       }
+
+       if( Gpsdata == '*' && commaa >= 5){
+				 lat[lat_cnt] ='\0';             // end of GPRMC message
+         lg[log_cnt]  = '\0';
+         commaa = 0;                      // end of GPRMC message
+         lat_cnt = 0;
+         log_cnt = 0;
+         f     = 0;
+         finished  = 1;
+
+      }
+    }
+			finished = 0;
+   pos_cnt = 0;
+}
 //Function that calculates the total taken distance:
 
 //Function to convert from degree to radian
