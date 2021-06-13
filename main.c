@@ -8,10 +8,14 @@
 
 
 char distancat[100];
-int j;
-int a;
-
-const int R = 6371; //Radius of earth in (km)
+double theta1;
+double theta2 ;
+double delta1;
+double delta2;
+double a;
+double c ;
+double d;
+const int R = 6371*1000; //Radius of earth in (km)
 const double PI=3.14159265358979323846;
 double lat1,lat2;
 double lon1,lon2;
@@ -101,7 +105,7 @@ void UART_Init(void) {
     //in uart0 use it as alternate function afsel
     //pctl of uart
 
-    UART2_IBRD_R = 104;    //or 104 
+    UART2_IBRD_R = 104;    //or 104
     UART2_FBRD_R = 11;   //baudrate
     UART2_LCRH_R = 0x0070;      //uartlcrh: data lengh 8bit bit5,bit6 ==1 --one stop bit bit3 ==0 -- no parity bit1,bit2 ==0 --enable fifo bit4 ==1
     UART2_CTL_R |= 0x0001;         //enable uartctl
@@ -112,7 +116,7 @@ void UART_Init(void) {
     GPIO_PORTD_AMSEL_R &= ~0XC0;       //analog
 
 }
-//initialization of uart0 
+//initialization of uart0
 void UART0_Init(void){
 SYSCTL_RCGCUART_R |=0x0001;   //enable uart0 and A
 SYSCTL_RCGCGPIO_R |=0x0001;
@@ -121,7 +125,7 @@ UART0_CTL_R  &=~0x0001;    //diable uart uartctl
 //pctl of uart
 
 UART0_IBRD_R = 104;
-UART0_FBRD_R = 11;//baudrate 
+UART0_FBRD_R = 11;//baudrate
 UART0_LCRH_R = 0x0070;//uartlcrh: data lengh 8bit bit5,bit6 ==1 --one stop bit   bit3   ==0 -- no parity  bit1,bit2  ==0 --enable fifo  bit4    ==1
 UART0_CTL_R = 0x0301;//enable uartctl
 
@@ -132,7 +136,7 @@ GPIO_PORTA_AMSEL_R   &=~ 0X03;
 
 }
 //display char on a terminal
-void UART_outchar(char data){    
+void UART_outchar(char data){
 while((UART0_FR_R &0X0080)==0);
 UART0_DR_R =data;
 }
@@ -165,16 +169,20 @@ double deg2rad(double deg){
 //Harvesine Formula to calculate the distance between two points
 double distance(double lat1, double lon1, double lat2, double lon2){
 
-  double theta1 = deg2rad(lat1);
-  double theta2 = deg2rad(lat2);
-  double delta1 = deg2rad(lat2 - lat1);
-  double delta2 = deg2rad(lon2 - lon1);
+	lat1=convert(lat1);
+	lon1=convert(lon1);
+	lat2=convert(lat2);
+	lon2=convert(lon2);
+   theta1 = deg2rad(lat1);
+   theta2 = deg2rad(lat2);
+  delta1 = deg2rad(lat2 - lat1);
+  delta2 = deg2rad(lon2 - lon1);
 
-  double a = sin(delta1 / 2) * sin(delta1 / 2) + cos(theta1) * cos(theta2) * sin(delta2 / 2) * sin(delta2 / 2);
-  double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-  double d = R * c;
+  a = sin(delta1 / 2) * sin(delta1 / 2) + cos(theta1) * cos(theta2) * sin(delta2 / 2) * sin(delta2 / 2);
+  c = 2 * atan2(sqrt(a), sqrt(1 - a));
+ d = R * c;
 
-  return totalDis += d;
+  return  d;
 }
 
 
@@ -210,7 +218,7 @@ int main (){
 		UART_Init();
 		PortEB_Init();
 		LCD_init();
-  	
+
 		UART0_Init();
 		Receive_GPS_Data();
 
@@ -232,15 +240,15 @@ int main (){
 		UART_outstring(lg);
 		UART_outstring("\n");
 		UART_outstring("\n");
-	
+
 	  lat2 = strtod(lat,NULL);
 		lon2=	strtod(lg,NULL);
 		dist = distance( lat1,  lon1,  lat2,  lon2);
-		
+
 		if(dist<0.1){ continue ;}
 		else{
 
-		findis+= 10*dist ;
+		findis+= dist ;
 		sprintf(distancat, "%3f", (float)findis);
 	//a=	(int)findis;
 	//distancat=(""+a).toCharArray();
