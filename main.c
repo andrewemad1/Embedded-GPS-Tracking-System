@@ -187,7 +187,7 @@ double distance(double lat1, double lon1, double lat2, double lon2){
 
 
 //function that turns on the RED LED when the distance exceeds 100 meters.
-void func1(float x){
+void func1(double x){
 
 if(x>=100)  GPIO_PORTF_DATA_R|=0x02 ;
 else   GPIO_PORTF_DATA_R &=~0x02;
@@ -268,23 +268,23 @@ int main (){
 		lat1=lat2;
 		lon1=lon2;
 		}
-		if((GPIO_PORTF_DATA_R&0x11)==0x10){ 
+		if((GPIO_PORTF_DATA_R&0x11)==0x10){
 LCD_clearScreen();
-LCD_displayString("  ");	
-LCD_displayString(lat);	
-LCD_displayString("N");	
+LCD_displayString("  ");
+LCD_displayString(lat);
+LCD_displayString("N");
 	_delay_ms(1000);
 LCD_clearScreen();
-LCD_displayString("  ");		
+LCD_displayString("  ");
 LCD_displayString(lg);
-LCD_displayString("  E");		
+LCD_displayString("  E");
 	_delay_ms(1000);
-LCD_clearScreen();	
-		
+LCD_clearScreen();
+
 }
 //if((GPIO_PORTF_DATA_R&0x11)==0x01){
 //LCD_displayString("  Enjoy GPS");		_delay_ms(1000);
-//LCD_clearScreen();	
+//LCD_clearScreen();
 //}
 
   	}
