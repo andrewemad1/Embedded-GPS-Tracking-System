@@ -233,19 +233,19 @@ int main (){
   	while(1){
 		 Receive_GPS_Data();
 				_delay_ms(250);
-		UART_outstring("Latitiude ");
+	/*	UART_outstring("Latitiude ");
 		UART_outstring(lat);
 		UART_outstring("\n");
 		UART_outstring("Longitude ");
 		UART_outstring(lg);
 		UART_outstring("\n");
 		UART_outstring("\n");
-
+		*/ //commented because this was for the verification on tera term only
 	  lat2 = strtod(lat,NULL);
 		lon2=	strtod(lg,NULL);
 		dist = distance( lat1,  lon1,  lat2,  lon2);
 
-		if(dist<0.1){ continue ;}
+		if(dist>0.25){ continue ;}
 		else{
 
 		findis+= dist ;
