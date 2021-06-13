@@ -268,7 +268,24 @@ int main (){
 		lat1=lat2;
 		lon1=lon2;
 		}
-
+		if((GPIO_PORTF_DATA_R&0x11)==0x10){ 
+LCD_clearScreen();
+LCD_displayString("  ");	
+LCD_displayString(lat);	
+LCD_displayString("N");	
+	_delay_ms(1000);
+LCD_clearScreen();
+LCD_displayString("  ");		
+LCD_displayString(lg);
+LCD_displayString("  E");		
+	_delay_ms(1000);
+LCD_clearScreen();	
+		
+}
+//if((GPIO_PORTF_DATA_R&0x11)==0x01){
+//LCD_displayString("  Enjoy GPS");		_delay_ms(1000);
+//LCD_clearScreen();	
+//}
 
   	}
 
