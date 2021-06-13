@@ -143,6 +143,18 @@ UART_outchar(*pt);
 pt++;
 }
 }
+double convert(double x) {
+    int y;
+    x = x / 100;
+    y = (int)x;
+    x = (x - y) * 100;
+    x = x / 60;
+    x = x + y;
+
+    return x;
+
+
+}
 //Function that calculates the total taken distance:
 
 //Function to convert from degree to radian
