@@ -3,12 +3,31 @@
 #include "tm4c123gh6pm.h"
 #include <string.h>
 #include <Math.h>
-#include "std_types.h"
 #include "lcd.h"
+#include <stdbool.h>
 
-const int R = 6371; //Radius of the earth in (kilometers)
-const double PI=3.14159265358979323846; //Constant PI
-double totalDis = 0; //The total distance taken by the global variable
+
+char distancat[100];
+int j;
+int a;
+
+const int R = 6371; //Radius of earth in (km)
+const double PI=3.14159265358979323846;
+double lat1,lat2;
+double lon1,lon2;
+double	lati1;
+double long1 ;
+double findis=0;  //Global Variable holding the total distance taken
+
+int Gpsdata;
+unsigned int finished =0;
+unsigned int pos_cnt=0;
+unsigned int lat_cnt=0;
+unsigned int log_cnt=0;
+unsigned int f    =0;
+unsigned int commaa=0; //Counting the number of commas to parse the char array
+char lat[20];          //char array latitude
+char lg[20];           //char array longitude
 
 void PORTFinit(){
   volatile uint32_t delay;
@@ -23,7 +42,12 @@ void PORTFinit(){
 	GPIO_PORTF_DEN_R=0x1F;
 	GPIO_PORTF_PUR_R=0x11;
 }
-
+char UART_receivechar ()
+{
+//Check if FIFO not empty to receive data from UART
+while ((UART2_FR_R&	0x10) !=0);
+return (char) UART2_DR_R;
+}
 //Function that calculates the total taken distance:
 
 //Function to convert from degree to radian
