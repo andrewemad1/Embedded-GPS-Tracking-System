@@ -186,11 +186,19 @@ double distance(double lat1, double lon1, double lat2, double lon2){
 }
 
 
-//function that turns on the LED when the distance exceeds 100 meters.
+//function that turns on the RED LED when the distance exceeds 100 meters.
 void func1(float x){
 
 if(x>=100)  GPIO_PORTF_DATA_R|=0x02 ;
 else   GPIO_PORTF_DATA_R &=~0x02;
+}
+//function that turns the BLUE LED when the distance exceeds 200 meters.
+void func2(double x) {
+
+	if (x >= 200)  GPIO_PORTF_DATA_R |= 0x04;
+	else   GPIO_PORTF_DATA_R &= ~0x04;
+
+
 }
 
 void PortEB_Init(){
